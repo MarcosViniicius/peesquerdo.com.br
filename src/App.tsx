@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import {
   AlertTriangle,
   ArrowRight,
@@ -31,6 +32,8 @@ type SatireItem = {
 };
 
 type CartItem = Product & { cartId: number };
+
+const siteUrl = 'https://peesquerdo.com.br';
 
 const catalog: Product[] = [
   {
@@ -439,51 +442,62 @@ const App = () => {
   );
 
   const CatalogView = () => (
-    <div className="min-h-screen bg-neutral-950 text-white p-6 md:p-12">
-      <div className="flex items-center justify-between flex-wrap gap-4 mb-10">
-        <div>
-          <h2 className="text-5xl md:text-6xl font-black uppercase italic tracking-tighter">Produtos</h2>
-          <p className="text-neutral-500 uppercase text-xs tracking-[0.3em] mt-2">
-            Catálogo irônico com 50 itens equilibrando tretas à esquerda e à direita.
-          </p>
-        </div>
-        <button
-          type="button"
-          onClick={() => setView('cart')}
-          className="bg-red-600 text-white px-6 py-3 font-black uppercase hover:bg-white hover:text-black transition-all"
-        >
-          Ver carrinho polarizado
-        </button>
-      </div>
+    <>
+      <Helmet>
+        <title>Catálogo · PÉESQUERDO.COM.BR</title>
+        <meta name="description" content="Catálogo irônico com 50 itens equilibrando tretas à esquerda e à direita." />
+        <link rel="canonical" href={`${siteUrl}/catalog`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Catálogo · PÉESQUERDO.COM.BR" />
+        <meta property="og:url" content={`${siteUrl}/catalog`} />
+      </Helmet>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {satiricalCatalog.map((item) => (
-          <div
-            key={item.name}
-            className="bg-neutral-900 border border-neutral-800 p-5 h-full flex flex-col gap-3 hover:border-red-600 transition-colors"
-          >
-            <div className="relative overflow-hidden aspect-video border border-neutral-800">
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
-              <span className="absolute bottom-2 left-2 bg-red-600 text-black px-2 py-1 text-[10px] font-black uppercase">Produto</span>
-            </div>
-            <h3 className="font-black text-xl uppercase leading-tight">{item.name}</h3>
-            <p className="text-sm text-neutral-400 leading-relaxed flex-1">{item.desc}</p>
-            <div className="text-[11px] uppercase text-red-400 tracking-[0.25em]">Entrega de tretas inclusa</div>
+      <div className="min-h-screen bg-neutral-950 text-white p-6 md:p-12">
+        <div className="flex items-center justify-between flex-wrap gap-4 mb-10">
+          <div>
+            <h2 className="text-5xl md:text-6xl font-black uppercase italic tracking-tighter">Produtos</h2>
+            <p className="text-neutral-500 uppercase text-xs tracking-[0.3em] mt-2">
+              Catálogo irônico com 50 itens equilibrando tretas à esquerda e à direita.
+            </p>
           </div>
-        ))}
-      </div>
+          <button
+            type="button"
+            onClick={() => setView('cart')}
+            className="bg-red-600 text-white px-6 py-3 font-black uppercase hover:bg-white hover:text-black transition-all"
+          >
+            Ver carrinho polarizado
+          </button>
+        </div>
 
-      <div className="mt-12 flex flex-wrap gap-3 text-[11px] uppercase text-neutral-500">
-        <span className="bg-neutral-900 border border-neutral-800 px-3 py-2">Entrega de tretas imediata no Twitter</span>
-        <span className="bg-neutral-900 border border-neutral-800 px-3 py-2">Equilíbrio de ironias: ninguém sai ileso</span>
-        <span className="bg-neutral-900 border border-neutral-800 px-3 py-2">Leia com moderação emocional</span>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {satiricalCatalog.map((item) => (
+            <div
+              key={item.name}
+              className="bg-neutral-900 border border-neutral-800 p-5 h-full flex flex-col gap-3 hover:border-red-600 transition-colors"
+            >
+              <div className="relative overflow-hidden aspect-video border border-neutral-800">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+                <span className="absolute bottom-2 left-2 bg-red-600 text-black px-2 py-1 text-[10px] font-black uppercase">Produto</span>
+              </div>
+              <h3 className="font-black text-xl uppercase leading-tight">{item.name}</h3>
+              <p className="text-sm text-neutral-400 leading-relaxed flex-1">{item.desc}</p>
+              <div className="text-[11px] uppercase text-red-400 tracking-[0.25em]">Entrega de tretas inclusa</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-12 flex flex-wrap gap-3 text-[11px] uppercase text-neutral-500">
+          <span className="bg-neutral-900 border border-neutral-800 px-3 py-2">Entrega de tretas imediata no Twitter</span>
+          <span className="bg-neutral-900 border border-neutral-800 px-3 py-2">Equilíbrio de ironias: ninguém sai ileso</span>
+          <span className="bg-neutral-900 border border-neutral-800 px-3 py-2">Leia com moderação emocional</span>
+        </div>
       </div>
-    </div>
+    </>
   );
 
   const MiniBanners = () => (
@@ -533,248 +547,322 @@ const App = () => {
     </section>
   );
 
-  const HomeView = () => (
-    <div className="min-h-screen bg-neutral-950 text-white pb-24">
-      <div className="bg-red-600 text-black py-2 px-4 flex items-center justify-center gap-4 text-xs font-black animate-pulse">
-        <AlertTriangle size={16} /> ALERTA: SANDÁLIAS IDEOLÓGICAS DETECTADAS NA ÁREA! <AlertTriangle size={16} />
-      </div>
+  const HomeView = () => {
+    const productLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: featuredProduct.name,
+      image: [featuredProduct.image],
+      description: featuredProduct.desc,
+      sku: `feat-${featuredProduct.id}`,
+      brand: { '@type': 'Brand', name: 'PÉESQUERDO' },
+      offers: {
+        '@type': 'Offer',
+        priceCurrency: 'BRL',
+        price: featuredProduct.price.toFixed(2),
+        availability: 'https://schema.org/InStock',
+        url: `${siteUrl}/#featured`,
+      },
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: featuredProduct.rating.toFixed(1),
+        reviewCount: 420,
+      },
+    };
 
-      <Hero />
-      <MiniBanners />
-      <CategoryBadges />
-      <FeaturedProduct />
-      <ProductGrid />
+    return (
+      <>
+        <Helmet>
+          <title>PÉESQUERDO.COM.BR · Marketplace sátira da polêmica</title>
+          <meta
+            name="description"
+            content="Marketplace paródia inspirado na polêmica Fernanda Torres x Havaianas. Produtos fictícios, ironia real."
+          />
+          <meta name="keywords" content="paródia, sátira, havaianas, fernanda torres, polêmica, marketplace, humor político" />
+          <link rel="canonical" href={`${siteUrl}/`} />
+          <meta property="og:type" content="website" />
+          <meta property="og:title" content="PÉESQUERDO.COM.BR · Marketplace sátira" />
+          <meta
+            property="og:description"
+            content="Produtos fictícios, ironia real. Polêmica Fernanda Torres x Havaianas reimaginada em ecommerce."
+          />
+          <meta property="og:url" content={`${siteUrl}/`} />
+          <meta
+            property="og:image"
+            content="https://images.unsplash.com/photo-1603487759033-bf99712a84a2?auto=format&fit=crop&q=80&w=1200"
+          />
+          <script type="application/ld+json">{JSON.stringify(productLd)}</script>
+        </Helmet>
 
-      <div className="mt-24 max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center border-y border-neutral-800 py-20">
-        <div>
-          <h2 className="text-4xl font-black mb-6 uppercase italic">
-            "Minha família está em risco por causa de um solado de borracha."
-          </h2>
-          <p className="text-neutral-400 mb-8 italic">— Deputado médio que nunca lavou o próprio chinelo.</p>
-          <div className="space-y-4">
-            <div className="flex gap-4 items-start">
-              <div className="bg-red-600 p-2">
-                <Skull size={20} />
+        <div className="min-h-screen bg-neutral-950 text-white pb-24">
+          <div className="bg-red-600 text-black py-2 px-4 flex items-center justify-center gap-4 text-xs font-black animate-pulse">
+            <AlertTriangle size={16} /> ALERTA: SANDÁLIAS IDEOLÓGICAS DETECTADAS NA ÁREA! <AlertTriangle size={16} />
+          </div>
+
+          <Hero />
+          <MiniBanners />
+          <CategoryBadges />
+          <FeaturedProduct />
+          <ProductGrid />
+
+          <div className="mt-24 max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center border-y border-neutral-800 py-20">
+            <div>
+              <h2 className="text-4xl font-black mb-6 uppercase italic">
+                "Minha família está em risco por causa de um solado de borracha."
+              </h2>
+              <p className="text-neutral-400 mb-8 italic">— Deputado médio que nunca lavou o próprio chinelo.</p>
+              <div className="space-y-4">
+                <div className="flex gap-4 items-start">
+                  <div className="bg-red-600 p-2">
+                    <Skull size={20} />
+                  </div>
+                  <p className="text-sm font-bold uppercase">100% Sinistro: sandálias que não respeitam a hierarquia do pé direito.</p>
+                </div>
+                <div className="flex gap-4 items-start">
+                  <div className="bg-white p-2 text-black">
+                    <Flag size={20} />
+                  </div>
+                  <p className="text-sm font-bold uppercase">Patriotismo de prateleira: para quem prefere boicotar do que trabalhar.</p>
+                </div>
               </div>
-              <p className="text-sm font-bold uppercase">100% Sinistro: sandálias que não respeitam a hierarquia do pé direito.</p>
             </div>
-            <div className="flex gap-4 items-start">
-              <div className="bg-white p-2 text-black">
-                <Flag size={20} />
-              </div>
-              <p className="text-sm font-bold uppercase">Patriotismo de prateleira: para quem prefere boicotar do que trabalhar.</p>
+            <div className="bg-red-600 p-10 rotate-2">
+              <h3 className="text-black text-6xl font-black tracking-tighter uppercase mb-4">AVISO!</h3>
+              <p className="text-black font-bold text-lg leading-tight uppercase">
+                Calçar o pé esquerdo pode causar: <br />• Empatia súbita <br />• Desejo de ir ao Oscar <br />• Perda de tempo em grupos de Telegram
+              </p>
             </div>
           </div>
-        </div>
-        <div className="bg-red-600 p-10 rotate-2">
-          <h3 className="text-black text-6xl font-black tracking-tighter uppercase mb-4">AVISO!</h3>
-          <p className="text-black font-bold text-lg leading-tight uppercase">
-            Calçar o pé esquerdo pode causar: <br />• Empatia súbita <br />• Desejo de ir ao Oscar <br />• Perda de tempo em grupos de Telegram
-          </p>
-        </div>
-      </div>
 
-      <Reviews />
+          <Reviews />
 
-      <div className="max-w-6xl mx-auto px-6 mt-20 mb-10 bg-neutral-900 border border-neutral-800 p-8">
-        <div className="inline-flex items-center gap-2 bg-red-600 text-black px-3 py-1 text-[11px] font-black uppercase mb-4">
-          Sobre
+          <div className="max-w-6xl mx-auto px-6 mt-20 mb-10 bg-neutral-900 border border-neutral-800 p-8">
+            <div className="inline-flex items-center gap-2 bg-red-600 text-black px-3 py-1 text-[11px] font-black uppercase mb-4">
+              Sobre
+            </div>
+            <h3 className="text-3xl font-black uppercase italic mb-3">Site de comédia, não de venda</h3>
+            <p className="text-neutral-300 leading-relaxed text-sm md:text-base">
+              Este marketplace é uma sátira. Nenhum produto é real, nenhuma compra será concluída. A intenção é brincar com a
+              polarização e com a polêmica Fernanda Torres x Havaianas, misturando referências e ironias. Se algo chegar em
+              casa, é só mais uma treta no grupo da família.
+            </p>
+          </div>
         </div>
-        <h3 className="text-3xl font-black uppercase italic mb-3">Site de comédia, não de venda</h3>
-        <p className="text-neutral-300 leading-relaxed text-sm md:text-base">
-          Este marketplace é uma sátira. Nenhum produto é real, nenhuma compra será concluída. A intenção é brincar com a
-          polarização e com a polêmica Fernanda Torres x Havaianas, misturando referências e ironias. Se algo chegar em
-          casa, é só mais uma treta no grupo da família.
-        </p>
-      </div>
-    </div>
-  );
+      </>
+    );
+  };
 
   const CartView = () => (
-    <div className="min-h-screen bg-neutral-950 text-white p-6 md:p-12">
-      <h2 className="text-6xl font-black mb-2 uppercase italic tracking-tighter">
-        CARRINHO <span className="text-red-600">IDEOLÓGICO</span>
-      </h2>
-      <p className="text-neutral-500 mb-10 uppercase text-xs tracking-[0.3em]">
-        Seu carrinho está mais polarizado que o Congresso — finalize antes que viem CPI.
-      </p>
-      {cart.length === 0 ? (
-        <div className="text-center py-20 border-2 border-dashed border-neutral-800">
-          <MessageSquareWarning className="mx-auto mb-4 text-neutral-700" size={60} />
-          <p className="text-2xl text-neutral-500 mb-6 font-black uppercase">
-            Seu carrinho está limpo de qualquer influência esquerdista.
-          </p>
-          <button
-            type="button"
-            onClick={() => setView('home')}
-            className="bg-red-600 text-white px-8 py-3 font-bold uppercase"
-          >
-            Ir se corromper
-          </button>
-        </div>
-      ) : (
-        <div className="max-w-4xl mx-auto space-y-4">
-          {cart.map((item) => (
-            <div
-              key={item.cartId}
-              className="flex items-center bg-neutral-900 p-6 border-l-8 border-red-600 hover:bg-neutral-800 transition-colors"
-            >
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-20 h-20 object-cover mr-6 border-2 border-white"
-              />
-              <div className="flex-1">
-                <h4 className="font-black text-xl uppercase italic">{item.name}</h4>
-                <p className="text-red-600 font-black text-lg uppercase tracking-widest">R$ {item.price.toFixed(2)}</p>
-                <p className="text-[11px] text-neutral-500 uppercase tracking-[0.2em]">Incluso: adesivo "me cancela" gratis</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => removeFromCart(item.cartId)}
-                className="text-neutral-500 hover:text-red-600 transition-colors"
-                aria-label={`Remover ${item.name} do carrinho`}
-              >
-                <Trash2 size={24} />
-              </button>
-            </div>
-          ))}
-          <div className="mt-12 p-10 border-4 border-white">
-            <div className="flex justify-between text-4xl font-black mb-6">
-              <span className="italic uppercase">TOTAL DO DÉBITO</span>
-              <span className="text-red-600">R$ {cartTotal.toFixed(2)}</span>
-            </div>
-            <p className="text-sm text-neutral-500 mb-6 uppercase tracking-[0.2em]">
-              Pagamento dividido em 12 textões sem juros emocionais.
+    <>
+      <Helmet>
+        <title>Carrinho · PÉESQUERDO.COM.BR</title>
+        <meta name="description" content="Seu carrinho está mais polarizado que o Congresso — finalize antes que viem CPI." />
+        <link rel="canonical" href={`${siteUrl}/cart`} />
+      </Helmet>
+
+      <div className="min-h-screen bg-neutral-950 text-white p-6 md:p-12">
+        <h2 className="text-6xl font-black mb-2 uppercase italic tracking-tighter">
+          CARRINHO <span className="text-red-600">IDEOLÓGICO</span>
+        </h2>
+        <p className="text-neutral-500 mb-10 uppercase text-xs tracking-[0.3em]">
+          Seu carrinho está mais polarizado que o Congresso — finalize antes que viem CPI.
+        </p>
+        {cart.length === 0 ? (
+          <div className="text-center py-20 border-2 border-dashed border-neutral-800">
+            <MessageSquareWarning className="mx-auto mb-4 text-neutral-700" size={60} />
+            <p className="text-2xl text-neutral-500 mb-6 font-black uppercase">
+              Seu carrinho está limpo de qualquer influência esquerdista.
             </p>
             <button
               type="button"
-              onClick={() => setView('checkout')}
-              className="w-full bg-red-600 text-white py-6 font-black text-3xl hover:bg-white hover:text-black transition-all uppercase italic"
+              onClick={() => setView('home')}
+              className="bg-red-600 text-white px-8 py-3 font-bold uppercase"
             >
-              Confirmar Autoflagelação
+              Ir se corromper
             </button>
           </div>
-        </div>
-      )}
-    </div>
+        ) : (
+          <div className="max-w-4xl mx-auto space-y-4">
+            {cart.map((item) => (
+              <div
+                key={item.cartId}
+                className="flex items-center bg-neutral-900 p-6 border-l-8 border-red-600 hover:bg-neutral-800 transition-colors"
+              >
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-20 h-20 object-cover mr-6 border-2 border-white"
+                />
+                <div className="flex-1">
+                  <h4 className="font-black text-xl uppercase italic">{item.name}</h4>
+                  <p className="text-red-600 font-black text-lg uppercase tracking-widest">R$ {item.price.toFixed(2)}</p>
+                  <p className="text-[11px] text-neutral-500 uppercase tracking-[0.2em]">Incluso: adesivo "me cancela" gratis</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => removeFromCart(item.cartId)}
+                  className="text-neutral-500 hover:text-red-600 transition-colors"
+                  aria-label={`Remover ${item.name} do carrinho`}
+                >
+                  <Trash2 size={24} />
+                </button>
+              </div>
+            ))}
+            <div className="mt-12 p-10 border-4 border-white">
+              <div className="flex justify-between text-4xl font-black mb-6">
+                <span className="italic uppercase">TOTAL DO DÉBITO</span>
+                <span className="text-red-600">R$ {cartTotal.toFixed(2)}</span>
+              </div>
+              <p className="text-sm text-neutral-500 mb-6 uppercase tracking-[0.2em]">
+                Pagamento dividido em 12 textões sem juros emocionais.
+              </p>
+              <button
+                type="button"
+                onClick={() => setView('checkout')}
+                className="w-full bg-red-600 text-white py-6 font-black text-3xl hover:bg-white hover:text-black transition-all uppercase italic"
+              >
+                Confirmar Autoflagelação
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 
   const CheckoutView = () => (
-    <div className="min-h-screen bg-neutral-950 text-white p-6 md:p-12">
-      <div className="max-w-3xl mx-auto bg-neutral-900 border-4 border-red-600 p-10">
-        <h2 className="text-4xl font-black mb-2 italic uppercase text-red-600">Formulário de Indignação</h2>
-        <p className="text-sm uppercase text-neutral-500 mb-8">Finalize o textão com dados mínimos de bom senso</p>
-        <div className="space-y-6">
-          <div>
-            <label className="block text-[10px] font-black text-neutral-500 mb-2 uppercase tracking-[0.2em]">
-              Seu Perfil Político
-            </label>
-            <select className="w-full bg-black border border-neutral-700 p-4 outline-none focus:border-red-600 text-sm font-bold">
-              <option>Patriota mas com calo no pé direito</option>
-              <option>Fã da Fernanda Torres (Infiltrado)</option>
-              <option>Só vim pelo boicote</option>
-              <option>Fisicamente Destro, Mentalmente Sinistro</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-[10px] font-black text-neutral-500 mb-2 uppercase tracking-[0.2em]">
-              Endereço para os Agentes do Boicote ignorarem
-            </label>
-            <input
-              type="text"
-              className="w-full bg-black border border-neutral-700 p-4 outline-none focus:border-red-600"
-              placeholder="Rua do Protesto, 171"
-            />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <>
+      <Helmet>
+        <title>Checkout · PÉESQUERDO.COM.BR</title>
+        <meta name="description" content="Finalize o textão com dados mínimos de bom senso." />
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href={`${siteUrl}/checkout`} />
+      </Helmet>
+
+      <div className="min-h-screen bg-neutral-950 text-white p-6 md:p-12">
+        <div className="max-w-3xl mx-auto bg-neutral-900 border-4 border-red-600 p-10">
+          <h2 className="text-4xl font-black mb-2 italic uppercase text-red-600">Formulário de Indignação</h2>
+          <p className="text-sm uppercase text-neutral-500 mb-8">Finalize o textão com dados mínimos de bom senso</p>
+          <div className="space-y-6">
             <div>
               <label className="block text-[10px] font-black text-neutral-500 mb-2 uppercase tracking-[0.2em]">
-                Cartão 'Corporativo'
+                Seu Perfil Político
+              </label>
+              <select className="w-full bg-black border border-neutral-700 p-4 outline-none focus:border-red-600 text-sm font-bold">
+                <option>Patriota mas com calo no pé direito</option>
+                <option>Fã da Fernanda Torres (Infiltrado)</option>
+                <option>Só vim pelo boicote</option>
+                <option>Fisicamente Destro, Mentalmente Sinistro</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-[10px] font-black text-neutral-500 mb-2 uppercase tracking-[0.2em]">
+                Endereço para os Agentes do Boicote ignorarem
               </label>
               <input
                 type="text"
                 className="w-full bg-black border border-neutral-700 p-4 outline-none focus:border-red-600"
-                placeholder="**** **** **** ****"
+                placeholder="Rua do Protesto, 171"
               />
             </div>
-            <div>
-              <label className="block text-[10px] font-black text-neutral-500 mb-2 uppercase tracking-[0.2em]">
-                Senha do Pix de 22 reais
-              </label>
-              <input
-                type="password"
-                className="w-full bg-black border border-neutral-700 p-4 outline-none focus:border-red-600"
-                placeholder="******"
-              />
-            </div>
-          </div>
-
-          <div className="bg-neutral-800 p-4 border border-neutral-700">
-            <p className="text-[11px] uppercase text-neutral-400 mb-3 tracking-[0.2em]">Opções de pagamento</p>
-            <div className="grid md:grid-cols-2 gap-3">
-              {paymentOptions.map((opt) => (
-                <label key={opt} className="flex items-center gap-3 bg-black/40 border border-neutral-700 px-3 py-3 cursor-pointer hover:border-red-600">
-                  <input type="radio" name="payment" className="accent-red-600" />
-                  <span className="text-sm font-bold text-neutral-200">{opt}</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-[10px] font-black text-neutral-500 mb-2 uppercase tracking-[0.2em]">
+                  Cartão 'Corporativo'
                 </label>
-              ))}
+                <input
+                  type="text"
+                  className="w-full bg-black border border-neutral-700 p-4 outline-none focus:border-red-600"
+                  placeholder="**** **** **** ****"
+                />
+              </div>
+              <div>
+                <label className="block text-[10px] font-black text-neutral-500 mb-2 uppercase tracking-[0.2em]">
+                  Senha do Pix de 22 reais
+                </label>
+                <input
+                  type="password"
+                  className="w-full bg-black border border-neutral-700 p-4 outline-none focus:border-red-600"
+                  placeholder="******"
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="pt-6">
-            <button
-              type="button"
-              onClick={() => setView('success')}
-              className="w-full bg-white text-black py-6 font-black text-2xl hover:bg-red-600 hover:text-white transition-all uppercase"
-            >
-              Finalizar Atentado à Moral <ArrowRight size={24} className="inline ml-2" />
-            </button>
-            <p className="text-[9px] text-neutral-700 mt-6 text-center leading-tight uppercase font-bold">
-              Nota: Ao clicar, você assume que não sabe diferenciar um par de chinelos de um golpe de estado. A PÉESQUERDO.COM.BR não se responsabiliza por vizinhos batendo panela.
-            </p>
+            <div className="bg-neutral-800 p-4 border border-neutral-700">
+              <p className="text-[11px] uppercase text-neutral-400 mb-3 tracking-[0.2em]">Opções de pagamento</p>
+              <div className="grid md:grid-cols-2 gap-3">
+                {paymentOptions.map((opt) => (
+                  <label key={opt} className="flex items-center gap-3 bg-black/40 border border-neutral-700 px-3 py-3 cursor-pointer hover:border-red-600">
+                    <input type="radio" name="payment" className="accent-red-600" />
+                    <span className="text-sm font-bold text-neutral-200">{opt}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div className="pt-6">
+              <button
+                type="button"
+                onClick={() => setView('success')}
+                className="w-full bg-white text-black py-6 font-black text-2xl hover:bg-red-600 hover:text-white transition-all uppercase"
+              >
+                Finalizar Atentado à Moral <ArrowRight size={24} className="inline ml-2" />
+              </button>
+              <p className="text-[9px] text-neutral-700 mt-6 text-center leading-tight uppercase font-bold">
+                Nota: Ao clicar, você assume que não sabe diferenciar um par de chinelos de um golpe de estado. A PÉESQUERDO.COM.BR não se responsabiliza por vizinhos batendo panela.
+              </p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 
   const SuccessView = () => (
-    <div className="min-h-screen bg-red-600 flex items-center justify-center p-6 text-black">
-      <div className="max-w-4xl w-full bg-white p-16 text-center shadow-[20px_20px_0px_0px_rgba(0,0,0,1)] relative">
-        <div className="absolute top-4 left-4 border-2 border-black px-2 py-1 text-[10px] font-black uppercase tracking-tighter">
-          Top Secret / Boicote Files
+    <>
+      <Helmet>
+        <title>Pedido Cancelado · PÉESQUERDO.COM.BR</title>
+        <meta name="description" content="O boicote venceu: nada será entregue, apenas tretas." />
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href={`${siteUrl}/success`} />
+      </Helmet>
+
+      <div className="min-h-screen bg-red-600 flex items-center justify-center p-6 text-black">
+        <div className="max-w-4xl w-full bg-white p-16 text-center shadow-[20px_20px_0px_0px_rgba(0,0,0,1)] relative">
+          <div className="absolute top-4 left-4 border-2 border-black px-2 py-1 text-[10px] font-black uppercase tracking-tighter">
+            Top Secret / Boicote Files
+          </div>
+          <MessageSquareWarning className="mx-auto mb-10 animate-bounce" size={100} />
+          <h2 className="text-7xl font-black mb-6 italic tracking-tighter uppercase leading-none">
+            VOCÊ FOI <br />
+            <span className="bg-black text-white px-4">CANCELADO</span>!
+          </h2>
+          <div className="space-y-8 text-xl font-bold uppercase leading-tight">
+            <p>Seu pedido de pé esquerdo foi interceptado por uma rede de robôs indignados no Twitter.</p>
+            <p className="bg-black text-white p-6 border-l-[12px] border-red-600 text-left text-sm italic normal-case">
+              "Não compramos chinelos de quem atua bem no cinema. O verdadeiro patriota anda descalço ou de bota militar em dia de sol."
+              <br />
+              <span className="not-italic font-black">— Comentário real de um post da Zambelli (provavelmente)</span>
+            </p>
+            <p className="text-red-600 text-2xl">
+              O boicote venceu! <br />
+              Nada será entregue. A entrega é imediata no Twitter.
+            </p>
+            <p className="text-sm">Seu dinheiro não foi gasto, mas sua paciência com a política brasileira acaba de ser debitada com sucesso.</p>
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              setCart([]);
+              setView('home');
+            }}
+            className="mt-12 bg-black text-white font-black px-12 py-5 text-xl hover:scale-105 transition-transform uppercase italic"
+          >
+            Voltar para o Grupo da Família
+          </button>
         </div>
-        <MessageSquareWarning className="mx-auto mb-10 animate-bounce" size={100} />
-        <h2 className="text-7xl font-black mb-6 italic tracking-tighter uppercase leading-none">
-          VOCÊ FOI <br />
-          <span className="bg-black text-white px-4">CANCELADO</span>!
-        </h2>
-        <div className="space-y-8 text-xl font-bold uppercase leading-tight">
-          <p>Seu pedido de pé esquerdo foi interceptado por uma rede de robôs indignados no Twitter.</p>
-          <p className="bg-black text-white p-6 border-l-[12px] border-red-600 text-left text-sm italic normal-case">
-            "Não compramos chinelos de quem atua bem no cinema. O verdadeiro patriota anda descalço ou de bota militar em dia de sol."
-            <br />
-            <span className="not-italic font-black">— Comentário real de um post da Zambelli (provavelmente)</span>
-          </p>
-          <p className="text-red-600 text-2xl">
-            O boicote venceu! <br />
-            Nada será entregue. A entrega é imediata no Twitter.
-          </p>
-          <p className="text-sm">Seu dinheiro não foi gasto, mas sua paciência com a política brasileira acaba de ser debitada com sucesso.</p>
-        </div>
-        <button
-          type="button"
-          onClick={() => {
-            setCart([]);
-            setView('home');
-          }}
-          className="mt-12 bg-black text-white font-black px-12 py-5 text-xl hover:scale-105 transition-transform uppercase italic"
-        >
-          Voltar para o Grupo da Família
-        </button>
       </div>
-    </div>
+    </>
   );
 
   return (
